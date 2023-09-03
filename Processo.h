@@ -6,18 +6,18 @@ class Processo
 private:
     /* data */
     long idProcesso;
+public:
+    Processo(long idProcesso, int dataInicio, int duracao, int prioridadeEstatica);
+    ~Processo();
     int dataInicio;
     int dataConclusao;
     int duracao;
     int prioridadeEstatica;
     int prioridadeDinamica;
+    int tempoEspera;
     int tempoExecutadoTotal;
     int tempoExecutadoQuantumAtual;
     Estado estado;
-public:
-    Processo(long idProcesso, int dataInicio, int duracao, int prioridadeEstatica);
-    ~Processo();
-    
 };
 
 Processo::Processo(long idProcesso, int dataInicio, int duracao, int prioridadeEstatica)

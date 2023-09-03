@@ -1,15 +1,21 @@
 #include <string>
-#include <queue>
+#include <vector>
 #include <Processo.h>
 
 class Escalonador
 {
 private:
-    std::queue<Processo> processosProntos;
+    std::vector<Processo> processosProntos;
     static int countTrocasContexto;
 public:
     Escalonador();
     ~Escalonador();
+    std::vector<Processo> getProcessosProntos() {
+        return processosProntos;
+    }
+    void setProcessosProntos(std::vector<Processo> processosProntos) {
+        this->processosProntos = processosProntos;
+    }
 };
 
 Escalonador::Escalonador()
