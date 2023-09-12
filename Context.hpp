@@ -1,7 +1,10 @@
 #ifndef CONTEXT_HPP
 #define CONTEXT_HPP
+#include <random>
 
-#include <random> // Inclided for random number generation
+// This class represents a context of a process. 
+// It stores various attributes like registers, program counter, stack pointer, and progress. The Context constructor initializes these attributes with random values. 
+// The generateRandomValue function generates random long integers for these attributes.
 
 class Context
 {
