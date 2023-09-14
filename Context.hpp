@@ -50,7 +50,7 @@ public:
     int processing(int progress_time)
     {
         int output = 0;
-        progress += 100 * (static_cast<float>(progress_time) / parameter.get_duration()); //TODO: Update progress based on time
+        progress += 100 * (static_cast<float>(progress_time) / parameter.getDuration()); //TODO: Update progress based on time
 
         if (progress >= 100.0) // Checks if progress made it to 100.0 or higher
         {

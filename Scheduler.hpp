@@ -1,8 +1,10 @@
-#define QUANTUM 1
+#define QUANTUM 2
 #include <vector>
 #include <string>
+#include <algorithm>
 #include "Context.hpp"     
-#include "ProcessTime.hpp"  
+#include "ProcessTime.hpp"
+#include "Process.hpp"  
 
 // This code is a blueprint for different scheduling algorithms like FCFS (First-Come-First-Serve), SJF (Shortest Job First), Priority Scheduling (Preemptive and Non-Preemptive), and Round Robin. 
 // Subclasses inherit from this base class and implement the scheduleNext function according to the specific scheduling strategy they represent.
@@ -22,8 +24,8 @@ protected:
     }
     
     // Checks if process is ready to execute
-    bool isProcessReady(const std::vector<Process *> &notReadyProcesses) {
-        if (!notReadyProcesses.empty() && notReadyProcesses[0]->getCreationTime() < *(timer.getTime())) {
+    bool isProcessReady(std::vector<Process *> &notReadyProcesses) {
+        if (!notReadyProcesses.empty() && notReadyProcesses[0]->getCreationTime() < timer.getTime()) { // TODO: verificar se está correto
             enqueueProcess(notReadyProcesses[0]);
             notReadyProcesses.erase(notReadyProcesses.begin());
             return true;
@@ -39,7 +41,7 @@ public:
         std::vector<std::string> output(my_size, "  ");
         
         for (const auto &process : readyProcesses) {
-            output[process->getID() - 1] = "--";
+            output[process->getId() - 1] = "--";
         }
         return output;
     }

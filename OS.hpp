@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <vector>
 #include "CPU.hpp"
-#include "File.hpp"
+// #include "File.hpp"
 #include "Scheduler.hpp"
 #include "Process.hpp" 
 #include "ProcessVariables.hpp" 
@@ -14,32 +14,32 @@
 class OS
 {
 private:
-    CPU cpu;
-    SchedulingAlgorithm *scheduler; // Pointer to a scheduling algorithm
+    Generic_CPU cpu;
+    SchedulerAlgorithm *scheduler; // Pointer to a scheduling algorithm
     std::vector<Process *> waitingQueue; // Queue to hold processes waiting to be scheduled
 
      // Function to choose a scheduling algorithm based on input string
-    SchedulingAlgorithm *chooseScheduler(const std::string &algorithm)
+    SchedulerAlgorithm *chooseScheduler(const std::string &algorithm)
     {
         if (algorithm == "FCFS")
         {
-            return new FCFSAlgorithm(waitingQueue);
+            return new FCFS_Algorithm(waitingQueue);
         }
         else if (algorithm == "SJF")
         {
-            return new SJFAlgorithm(waitingQueue);
+            return new SJF_Algorithm(waitingQueue);
         }
         else if (algorithm == "PNP")
         {
-            return new PNPAlgorithm(waitingQueue);
+            return new PNP_Algorithm(waitingQueue);
         }
         else if (algorithm == "PP")
         {
-            return new PPAlgorithm(waitingQueue);
+            return new PP_Algorithm(waitingQueue);
         }
         else
         {
-            return new RRAlgorithm(waitingQueue);
+            return new RR_Algorithm(waitingQueue);
         }
     }
 
@@ -78,7 +78,7 @@ public:
             insertProcessByCreationTime(p); // Insert the process into the queue based on creation time
         }
 
-        cpu = CPU(); // Init the CPU
+        cpu = Generic_CPU(); // Init the CPU
     }
 
     // Function to start the OS
@@ -97,7 +97,7 @@ public:
             time++;
             Process *current = scheduler->scheduleNext(waitingQueue);  // Get the next scheduled process
             std::vector<std::string> state = scheduler->getState(waitingQueue.size());
-            state[current->getID() - 1] = "##"; // Mark the currently executing process
+            state[current->getId() - 1] = "##"; // Mark the currently executing process
 
             for (int i = 0; i < state.size(); ++i)
             {

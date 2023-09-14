@@ -10,14 +10,14 @@ class Process
 {
 public:
 // Initializes the process with an ID and variables
-    Process(int id, Process_Variables &variables) : id(new_id), variables(variables), start_time(-1), end_time(-1), state(State::NEW), context(new_context())
+    Process(int id, ProcessVariables &variables) : id(id), variables(variables), start_time(-1), end_time(-1), state(State::NEW), context(New_Context())
     {
     }
 
     // Getter methods to retrieve process variables
     int getId() const
     {
-        return ID;
+        return id;
     }
 
     int getPriority() const
@@ -72,7 +72,7 @@ public:
     // Simulate the running of a process for a given time
     Context running(int time)
     {
-        state = context.running(time); // Update the state using the context
+        state = context.processing(time); // Update the state using the context
         return context; // Return the updated context
     }
 
@@ -97,10 +97,10 @@ private:
         TERMINATED
     };
 
-    int Id;                         // Identifier for the process
-    int start_time;                 // Reference to the process variables
+    int id;                         // Identifier for the process
+    int start_time;                 // Time whe the process finishes running
     int end_time;                   // Time whe the process starts running
-    Process_Variables &variables;   // Time whe the process finishes running
+    ProcessVariables &variables;   // Reference to the process variables
     Context context;                // Current state of the process
     State state;                    // Process context for execution
 };
