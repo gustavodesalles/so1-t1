@@ -103,7 +103,7 @@ void prioridadesNaoPreemptivo(std::vector<Processo> &processos)
     calculoNaoPreemptivo(processos);
 }
 
-void calculoNaoPreemptivo(std::vector<Processo> &processos)
+int calculoNaoPreemptivo(std::vector<Processo> &processos)
 {
     int tempo = 0;
     for (int i = 0; i < processos.size(); ++i)
@@ -117,6 +117,7 @@ void calculoNaoPreemptivo(std::vector<Processo> &processos)
         processos[i].tempoExecutadoTotal = processos[i].dataConclusao - processos[i].dataInicio;
         processos[i].tempoEspera = processos[i].tempoExecutadoTotal - processos[i].duracao;
     }
+    return tempo;
 }
 
 // void calculoPP(std::vector<Processo> &processos)
@@ -126,7 +127,7 @@ void calculoNaoPreemptivo(std::vector<Processo> &processos)
 
 // }
 
-void imprimirNaoPreemptivo(std::vector<Processo> &processos)
+void imprimirNaoPreemptivo(std::vector<Processo> &processos, int tempo)
 {
     std::cout << "Time ";
     for (int i = 0; i < processos.size(); ++i)
@@ -134,8 +135,7 @@ void imprimirNaoPreemptivo(std::vector<Processo> &processos)
         std::cout << " P" << i + 1;
     }
     std::cout << '\n';
-    int dataFinal = obterDataConclusaoUltima(processos);
-    for (int i = 0; i < dataFinal; i++)
+    for (int i = 0; i < tempo; i++)
     {
         std::cout << i << "-" << i + 1;
         for (int j = 0; j < processos.size(); j++)
