@@ -140,8 +140,54 @@ void prioridadesPreemptivo(std::vector<Processo> &processos)
         {
             // trocar o estado do atual para concluído
             // buscar o próximo processo da fila
-        }   
+        }
+        tempo++;   
     }
+}
+
+void roundRobin(std::vector<Processo> &processos, int quantum) {
+    sortFCFS(processos);
+    Processo atual = processos[0];
+    int tempo = atual.dataInicio;
+    std::cout << "Time ";
+    for (int i = 0; i < processos.size(); ++i)
+    {
+        std::cout << " P" << i + 1;
+    }
+    std::cout << '\n';
+    for (int i = 0; i < tempo; i++)
+    {
+        std::cout << i << "-" << i + 1;
+        for (int j = 0; j < processos.size(); j++)
+        {
+            std::cout << "   ";
+        }
+        std::cout << '\n';
+    }
+
+    while (!todosProcessosConcluidos)
+    {
+        for (int i = 0; i < quantum; i++)
+        {
+            atual.tempoJaExecutado++;
+            imprimirEstadoAtual(processos, tempo);
+            tempo++;
+            if (atual.tempoJaExecutado == atual.duracao)
+            {
+                // trocar o estado do atual para concluído
+                break;
+            }
+            
+        }
+        if (atual.tempoJaExecutado == atual.duracao) //verifica de novo no fim do quantum
+            {
+                // trocar o estado do atual para concluído
+            } else {
+                // trocar o estado do atual para pronto
+            }
+        // buscar o próximo processo da fila
+    }
+    
 }
 
 bool todosProcessosConcluidos(std::vector<Processo> &processos)
