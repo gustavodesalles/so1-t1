@@ -15,6 +15,7 @@ public:
     int prioridadeEstatica;
     int prioridadeDinamica;
     int tempoEspera;
+    int tempoJaExecutado;
     int tempoExecutadoTotal;
     int tempoExecutadoQuantumAtual;
     Estado estado;
@@ -26,6 +27,7 @@ Processo::Processo(long idProcesso, int dataInicio, int duracao, int prioridadeE
     this->dataInicio = dataInicio;
     this->duracao = duracao;
     this->prioridadeEstatica = prioridadeEstatica;
+    this->tempoJaExecutado = 0;
 }
 
 Processo::~Processo()

@@ -103,6 +103,73 @@ void prioridadesNaoPreemptivo(std::vector<Processo> &processos)
     calculoNaoPreemptivo(processos);
 }
 
+void prioridadesPreemptivo(std::vector<Processo> &processos)
+{
+    sortPrioridadesNaoPreemptivo(processos);
+    Processo atual = processos[0];
+    
+    int tempo = atual.dataInicio;
+    std::cout << "Time ";
+    for (int i = 0; i < processos.size(); ++i)
+    {
+        std::cout << " P" << i + 1;
+    }
+    std::cout << '\n';
+    for (int i = 0; i < tempo; i++)
+    {
+        std::cout << i << "-" << i + 1;
+        for (int j = 0; j < processos.size(); j++)
+        {
+            std::cout << "   ";
+        }
+        std::cout << '\n';
+    }
+    
+    while (!todosProcessosConcluidos(processos))
+    {
+        std::vector<Processo> processosMaiorPrioridade = encontrarProcessosMaiorPrioridade(processos, atual.prioridadeEstatica, tempo);
+        if (processosMaiorPrioridade.size() > 0)
+        {
+            //trocar de contexto com o primeiro item do vetor processosMAiorPrioridade
+            //alterar o estado também
+            atual = processosMaiorPrioridade[0];
+        }
+        atual.tempoJaExecutado++;
+        imprimirEstadoAtual(processos, tempo);
+        if (atual.tempoJaExecutado == atual.duracao)
+        {
+            // trocar o estado do atual para concluído
+            // buscar o próximo processo da fila
+        }   
+    }
+}
+
+bool todosProcessosConcluidos(std::vector<Processo> &processos)
+{
+    for (int i = 0; i < processos.size(); i++)
+    {
+        if (processos[i].estado != TERMINADO)
+        {
+            return false;
+        } 
+    }
+    return true;
+}
+
+std::vector<Processo> encontrarProcessosMaiorPrioridade(std::vector<Processo> &processos, int prioridade, int tempo)
+{
+    std::vector<Processo> processosMaiorPrioridade;
+    for (int i = 0; i < processos.size(); i++)
+    {
+        if (processos[i].prioridadeEstatica > prioridade && processos[i].dataInicio == tempo)
+        {
+            processosMaiorPrioridade.push_back(processos[i]);
+        } 
+    }
+    sortPrioridadesNaoPreemptivo(processosMaiorPrioridade); // garantir que o processo de maior prioridade vem primeiro
+    return processosMaiorPrioridade;
+}
+
 int calculoNaoPreemptivo(std::vector<Processo> &processos)
 {
     int tempo = 0;
@@ -144,6 +211,21 @@ void imprimirNaoPreemptivo(std::vector<Processo> &processos, int tempo)
         }
         std::cout << '\n';
     }
+}
+
+void imprimirEstadoAtual(std::vector<Processo> &processos, int tempo)
+{
+    for (int i = 0; i < processos.size(); i++)
+    {
+        if (processos[i].estado == EXECUTANDO) {
+            std::cout << " ##";
+        } else if (processos[i].estado == PRONTO) {
+            std::cout << " --";
+        } else {
+            std::cout << "  ";
+        }
+    }
+    
 }
 
 void imprimirTempoProcesso(Processo p, int i)
