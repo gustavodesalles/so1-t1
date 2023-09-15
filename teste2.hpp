@@ -67,6 +67,7 @@ Process* fcfsScheduleNext(std::vector<Process*>& readyProcesses, std::vector<Pro
 }
 
 // Function for the Shortest Job First (SJF) scheduling algorithm.
+// Function for the Shortest Job First (SJF) scheduling algorithm.
 Process* sjfScheduleNext(std::vector<Process*>& readyProcesses, std::vector<Process*>& notReadyProcesses, ProcessTime& timer, std::vector<Process>& processes) {
     if (readyProcesses.empty()) {
         if (isProcessReady(readyProcesses, notReadyProcesses, timer)) {
@@ -146,7 +147,7 @@ Process* ppScheduleNext(std::vector<Process*>& readyProcesses, std::vector<Proce
     return readyProcesses.empty() ? nullptr : readyProcesses[0];
 }
 
-void roundRobin(std::vector<Process>& processes, int quantum) { // TODO: Finish Round Robin
+void roundRobin(std::vector<Process>& processes, int quantum) {
     sortFCFS(processes);
     Process current = processes[0];
     int time = current.startTime;
@@ -191,11 +192,21 @@ void roundRobin(std::vector<Process>& processes, int quantum) { // TODO: Finish 
 }
 
 
+// Function for Round Robin (RR) scheduling algorithm.
+Process* rrScheduleNext(std::vector<Process*>& readyProcesses, std::vector<Process*>& notReadyProcesses, ProcessTime& timer, int quantum) {
+    if (readyProcesses.empty()) {
+        if (isProcessReady(readyProcesses, notReadyProcesses, timer)) {
+            // Implement Round Robin scheduleNext logic here with the quantum
+            // Consider using a queue or circular data structure for RR
+        }
+    }
+    return readyProcesses.empty() ? nullptr : readyProcesses[0];
+}
 
-//int main() { 
-//
-//
-//   Process* nextProcess = fcfsScheduleNext(readyProcesses, notReadyProcesses, timer, processes);
-//
-//   return 0;
-//}
+int main() { 
+
+
+    Process* nextProcess = fcfsScheduleNext(readyProcesses, notReadyProcesses, timer, processes);
+
+    return 0;
+}

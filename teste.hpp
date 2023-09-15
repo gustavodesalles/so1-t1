@@ -21,25 +21,24 @@ bool isProcessReady(std::vector<Process*>& readyProcesses, std::vector<Process*>
     return false;
 }
 
-// Function to set the currently executing process
+// Function to set the currently executing process.
 void setCurrentExecutingProcess(Process* process) {
     Context::currentExecutingProcess = process;
 }
 
-// Function to get the currently executing process
+// Function to get the currently executing process.
 Process* getCurrentExecutingProcess() {
     return Context::currentExecutingProcess;
 }
 
-
-// Function to sort processes based on start times (FCFS)
+// Function to sort processes based on start times (FCFS).
 void sortFCFS(std::vector<Process>& processes) {
     std::stable_sort(processes.begin(), processes.end(), [](const Process& a, const Process& b) {
         return a.startTime < b.startTime;
     });
 }
 
-// Function to sort processes based on durations (SJF)
+// Function to sort processes based on durations (SJF).
 void sortSJF(std::vector<Process>& processes) {
     sortFCFS(processes);
     std::stable_sort(processes.begin(), processes.end(), [](const Process& a, const Process& b) {
@@ -51,15 +50,15 @@ void sortSJF(std::vector<Process>& processes) {
 Process* fcfsScheduleNext(std::vector<Process*>& readyProcesses, std::vector<Process*>& notReadyProcesses, ProcessTime& timer, std::vector<Process>& processes) {
     if (readyProcesses.empty()) {
         if (isProcessReady(readyProcesses, notReadyProcesses, timer)) {
-            // Sort the processes based on arrival time (FCFS)
+            // Sort the processes based on arrival time (FCFS).
             sortFCFS(processes);
 
-            // Update the readyProcesses vector
+            // Update the readyProcesses vector.
             for (Process& p : processes) {
                 enqueueProcess(readyProcesses, &p);
             }
 
-            // Return the first process in the updated readyProcesses vector
+            // Return the first process in the updated readyProcesses vector.
             return readyProcesses[0];
         }
     }
@@ -95,20 +94,19 @@ Process* sjfScheduleNext(std::vector<Process*>& readyProcesses, std::vector<Proc
     return readyProcesses.empty() ? nullptr : readyProcesses[0];
 }
 
-// Function to sort processes based on static priorities (Non-preemptive Priority)
+// Function to sort processes based on static priorities (Non-preemptive Priority).
 void sortNonPreemptivePriorities(std::vector<Process>& processes) {
     sortFCFS(processes);
     std::stable_sort(processes.begin(), processes.end(), [](const Process& a, const Process& b) {
-        return a.priority > b.priority; // Sort in descending order (higher priority first)
+        return a.priority > b.priority; // Sort in descending order (higher priority first).
     });
 }
-
 
 // Function for Non-preemptive Priority (PNP) scheduling algorithm.
 Process* pnpScheduleNext(std::vector<Process*>& readyProcesses, std::vector<Process*>& notReadyProcesses, ProcessTime& timer, std::vector<Process>& processes) {
     if (readyProcesses.empty()) {
         if (isProcessReady(readyProcesses, notReadyProcesses, timer)) {
-            sortNonPreemptivePriorities(processes); // Use the non-preemptive priorities sorting function
+            sortNonPreemptivePriorities(processes); // Use the non-preemptive priorities sorting function.
             return readyProcesses[0];
         }
     }
@@ -146,56 +144,45 @@ Process* ppScheduleNext(std::vector<Process*>& readyProcesses, std::vector<Proce
     return readyProcesses.empty() ? nullptr : readyProcesses[0];
 }
 
-void roundRobin(std::vector<Process>& processes, int quantum) { // TODO: Finish Round Robin
+// Function for Round Robin (RR) scheduling algorithm.
+void roundRobin(std::vector<Process>& processes, int quantum) {
     sortFCFS(processes);
-    Process current = processes[0];
+    Process current = processes[0]; // Initialize the current process to the first process in the sorted queue.
     int time = current.startTime;
     std::cout << "Time ";
-    for (int i = 0; i < processes.size(); ++i)
-    {
-        std::cout << " P" << i + 1;
+    for (int i = 0; i < processes.size(); ++i) {
+        std::cout << " P" << i + 1; // Print process labels.
     }
     std::cout << '\n';
-    for (int i = 0; i < time; i++)
-    {
-        std::cout << i << "-" << i + 1;
-        for (int j = 0; j < processes.size(); j++)
-        {
-            std::cout << "   ";
+    for (int i = 0; i < time; i++) {
+        std::cout << i << "-" << i + 1; // Print the time interval.
+        for (int j = 0; j < processes.size(); j++) {
+            std::cout << "   "; // Print empty space for each process.
         }
         std::cout << '\n';
     }
 
-    while (!allProcessesCompleted(processes))
-    {
-        for (int i = 0; i < quantum; i++)
-        {
+    while (!allProcessesCompleted(processes)) {
+        for (int i = 0; i < quantum; i++) {
             current.timeExecuted++;
-            printCurrentState(processes, time);
+            printCurrentState(processes, time); // Function to print the current state of processes (not defined in this code).
             time++;
-            if (current.timeExecuted == current.duration)
-            {
-                // Change the state of the current process to completed
+            if (current.timeExecuted == current.duration) {
+                // Change the state of the current process to completed (missing in this code).
                 break;
             }
-            
         }
-        if (current.timeExecuted == current.duration) // Check again at the end of the quantum
+        if (current.timeExecuted == current.duration) // Check again at the end of the quantum.
         {
-            // Change the state of the current process to completed
+            // Change the state of the current process to completed (missing in this code).
         } else {
-            // Change the state of the current process to ready
+            // Change the state of the current process to ready (missing in this code).
         }
-        // Find the next process in the queue
+        // Find the next process in the queue (missing in this code).
     }
 }
 
-
-
-//int main() { 
-//
-//
-//   Process* nextProcess = fcfsScheduleNext(readyProcesses, notReadyProcesses, timer, processes);
-//
-//   return 0;
-//}
+/*int main() { 
+    Process* nextProcess = fcfsScheduleNext(readyProcesses, notReadyProcesses, timer, processes);
+    return 0;
+}*/
